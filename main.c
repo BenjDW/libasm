@@ -7,7 +7,7 @@ int	main(void)
 	int		fd;
 	char	buffer[100];
 	int		i;
-	
+
 	printf("\nft_read\n");
 	fd = open("test.txt", O_RDONLY);
 	if (fd == -1)
@@ -18,12 +18,11 @@ int	main(void)
 	buffer[i] = '\0';
 	printf("read: %s\n", buffer);
 	close(fd);
-	return (0);
-	printf("\nft_write\n");
-	ft_write(1, "ok ceci est un test\n", 6);
-	
 
-	printf("strlen test:\n");
+	printf("\nft_write\n");
+	ft_write(1, "ok ceci est un test\n", 20);
+
+	printf("\nft_strlen\n");
 	printf("ft_strlen(\"test\"): %ld\n", (long)ft_strlen("test"));
 	printf("str empty: %ld\n", (long)ft_strlen(""));
 
@@ -32,14 +31,15 @@ int	main(void)
 	printf("a & b: %d\n", ft_strcmp("a", "b"));
 
 	printf("\nstrcpy test\n");
-	str = malloc(10);
+	str = malloc(20);
 	str = ft_strcpy(str, "salut tout le monde");
 	printf("strcpy: %s\n", str);
-	free(str);
+	// free(str);
 
 	printf("\nft_strdup test:\n");
 	dup = ft_strdup(str);
 	printf("strdup: %s\n", dup);
+	free(str);
 	free(dup);
 
 	return (0);
