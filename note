@@ -1,0 +1,57 @@
+Sur x86-64 Linux, la convention d’appel System V AMD64 place les arguments ainsi :
+
+Paramètre C	  Registre	Rôle
+fd = rdi Descripteur de fichier (ex. 0 = stdin, 1 = stdout, ou un fd ouvert avec open)
+
+buf = rsi Adresse du buffer où écrire les octets lus
+
+count = rdx Nombre maximum d’octets à lire
+
+Sur Linux x86-64, chaque syscall a un numéro. Pour read, c’est 0.
+Le noyau attend :
+
+rax = numéro du syscall
+rdi, rsi, rdx = arguments du syscall
+
+Les registres — votre boîte à outils
+Le CPU a des "variables ultra rapides" appelées registres :
+
+Registre	Taille	    Usage principal
+rax         64 bits     Valeur de retour, calculs
+rdi         64 bits     1er argument
+rsi         64 bits     2e argument
+rdx         64 bits     3e argument
+rcx         64 bits     Compteur / 4e argument
+r8, r9      64 bits     5e, 6e arguments
+al, bl...   8 bits      Un seul octet (partie basse de rax, rbx...)
+
+Les instructions essentielles
+Déplacements et calculs
+mov rax, 0          ; rax = 0
+mov rax, rdi        ; copie rdi dans rax
+xor rax, rax        ; rax = 0 (plus rapide que mov)
+inc rax             ; rax++ (rax = rax + 1)
+add rax, 1          ; rax = rax + 1
+sub rax, rdx        ; rax = rax - rdx
+Accès mémoire (chaînes de caractères)
+mov al, BYTE [rdi]       ; lit 1 octet à l'adresse rdi
+mov BYTE [rdi], al       ; écrit 1 octet à l'adresse rdi
+cmp BYTE [rdi + rax], 0  ; compare l'octet à rdi+rax avec 0 ('\0')
+BYTE = 1 octet. [adresse] = "va lire en mémoire à cette adresse".
+
+Comparaisons et sauts (les boucles)
+cmp rax, 0    ; compare rax avec 0 (met des "flags")
+je  label     ; saute si égal (jump if equal)
+jz  label     ; saute si zéro (pareil que je)
+jne label     ; saute si différent
+jl  label     ; saute si rax < 0 (signed)
+jnz label     ; saute si non zéro
+jmp label     ; saute toujours
+Fonctions
+
+call ma_fonction   ; appelle la fonction (sauvegarde où revenir)
+ret                ; revient à l'appelant
+Pile (stack) — pour sauvegarder des valeurs
+push rdi    ; empile rdi (sauvegarde)
+pop  r8     ; dépile dans r8 (restaure)
+La pile fonctionne en LIFO (dernier entré, premier sorti).
