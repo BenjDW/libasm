@@ -19,5 +19,5 @@ cmp:
 return:
 	movsx		rax, BYTE[rdi + rcx]
 	movsx		rdx, BYTE[rsi + rcx]
-	sub		rax, rdx
+	sub			rax, rdx
 	ret	
