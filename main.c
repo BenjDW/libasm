@@ -33,12 +33,13 @@ int	main(void)
 
 	printf("\nstrcpy test\n");
 	str = malloc(10);
-	str = ft_strcpy(str, "saucisson");
+	str = ft_strcpy(str, "salut tout le monde");
 	printf("strcpy: %s\n", str);
+	free(str);
+
 	printf("\nft_strdup test:\n");
 	dup = ft_strdup(str);
 	printf("strdup: %s\n", dup);
-	free(str);
 	free(dup);
 
 	return (0);
